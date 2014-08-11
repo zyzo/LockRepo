@@ -1,15 +1,13 @@
-package dha.lockrepo.core.utils;
+package dha.lockrepo.io;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Locale;
 import java.util.Properties;
 
 import dha.lockrepo.core.Constants;
 import dha.lockrepo.core.enums.MessageEnum;
-import dha.lockrepo.core.exceptions.AccessRightException;
 
 public class ResourceLoader {
 
@@ -18,8 +16,6 @@ public class ResourceLoader {
     /**
      * Return the message of the default locale indicated by the JVM
      * 
-     * @throws AccessRightException
-     * @throws MalformedURLException
      */
     public static String getMessage(String message) {
         return ResourceLoader.getResource(message, DEFAULT_LOCALE);
@@ -28,9 +24,6 @@ public class ResourceLoader {
     /**
      * Return the corresponding message of the default locale indicated by the
      * JVM
-     * 
-     * @throws AccessRightException
-     * @throws MalformedURLException
      */
     public static String getMessage(MessageEnum messageEnum) {
         return ResourceLoader.getMessage(messageEnum, DEFAULT_LOCALE);

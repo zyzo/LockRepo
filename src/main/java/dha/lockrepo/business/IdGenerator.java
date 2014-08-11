@@ -1,4 +1,4 @@
-package dha.lockrepo.core.utils;
+package dha.lockrepo.business;
 
 public class IdGenerator {
     public static Long generateSecurePieceId() {

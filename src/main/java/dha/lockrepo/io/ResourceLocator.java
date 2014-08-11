@@ -1,4 +1,4 @@
-package dha.lockrepo.core.utils;
+package dha.lockrepo.io;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -13,7 +13,7 @@ public class ResourceLocator {
      */
     public static String getDirectoryPath() throws AccessRightException, MalformedURLException {
         try {
-            return new File(".").getAbsolutePath();
+            return new File("").getAbsolutePath();
         } catch (SecurityException e) {
             throw new AccessRightException(
                     ResourceLoader.getMessage(MessageEnum.EXC_ACCESS_RIGHT_SEC));

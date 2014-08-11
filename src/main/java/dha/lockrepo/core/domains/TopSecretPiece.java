@@ -1,8 +1,8 @@
 package dha.lockrepo.core.domains;
 
-import dha.lockrepo.core.utils.IdGenerator;
+import dha.lockrepo.business.IdGenerator;
 
-public class SecurePiece {
+public class TopSecretPiece {
 
     private Long   id;
     private String title;
@@ -10,7 +10,7 @@ public class SecurePiece {
     private String passwd;
     private String info;
 
-    public SecurePiece(String title, String username, String passwd) {
+    public TopSecretPiece(String title, String username, String passwd) {
         this.id = IdGenerator.generateSecurePieceId();
         this.title = title;
         this.username = username;
