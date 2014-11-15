@@ -39,7 +39,6 @@ public class DataGuardianTest {
 
     @Test
     public void testDeletePiece() {
-        dg.deleteFromFile(line);
     }
 
 }
