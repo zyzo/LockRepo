@@ -6,4 +6,6 @@ public class Constants {
 
     public static final String PROPERTY_FILE           = "lrp_messages";
 
+    public static final String TOP_SECRET_FILE         = "sp";
+
 }

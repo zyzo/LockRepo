@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import org.junit.Test;
 
 import dha.lockrepo.core.exceptions.AccessRightException;
-import dha.lockrepo.io.ResourceLocator;
 
 public class ResourceLocatorTest {
 
@@ -17,5 +16,4 @@ public class ResourceLocatorTest {
         String actual = ResourceLocator.getDirectoryPath();
         assertEquals(expected, actual);
     }
-
 }

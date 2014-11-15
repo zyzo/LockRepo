@@ -1,16 +1,16 @@
 package dha.lockrepo.business;
 
-import dha.lockrepo.core.domains.TopSecretGroup;
-import dha.lockrepo.core.domains.TopSecretPiece;
+import dha.lockrepo.core.domains.TopSecretGroupBE;
+import dha.lockrepo.core.domains.TopSecretPieceBE;
 
 public interface TopSecretService {
 
     /**
      * Add the TopSecret information to a default group
      */
-    void addTopSecretPiece(TopSecretPiece sPiece);
+    void addTopSecretPiece(TopSecretPieceBE sPiece);
 
-    void addTopSecretPiece(TopSecretPiece sPiece, TopSecretGroup sGroup);
+    void addTopSecretPiece(TopSecretPieceBE sPiece, TopSecretGroupBE sGroup);
 
     void removeTopSecretPieceById(Long sPieceId);
 

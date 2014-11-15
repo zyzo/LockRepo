@@ -1,18 +1,18 @@
 package dha.lockrepo.business;
 
-import dha.lockrepo.core.domains.TopSecretGroup;
-import dha.lockrepo.core.domains.TopSecretPiece;
+import dha.lockrepo.core.domains.TopSecretGroupBE;
+import dha.lockrepo.core.domains.TopSecretPieceBE;
 
 public class TopSecretServiceImpl implements TopSecretService {
 
     @Override
-    public void addTopSecretPiece(TopSecretPiece sPiece) {
+    public void addTopSecretPiece(TopSecretPieceBE sPiece) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void addTopSecretPiece(TopSecretPiece sPiece, TopSecretGroup sGroup) {
+    public void addTopSecretPiece(TopSecretPieceBE sPiece, TopSecretGroupBE sGroup) {
         // TODO Auto-generated method stub
 
     }
