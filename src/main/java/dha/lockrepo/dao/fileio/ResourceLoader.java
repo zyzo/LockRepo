@@ -1,4 +1,4 @@
-package dha.lockrepo.io;
+package dha.lockrepo.dao.fileio;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
 
-import dha.lockrepo.core.Constants;
 import dha.lockrepo.core.enums.MessageEnum;
+import dha.lockrepo.dao.FileConstants;
 
 public class ResourceLoader {
 
@@ -55,13 +55,13 @@ public class ResourceLoader {
     }
 
     private static FileInputStream buildPropertyPathFromLocale(Locale locale) throws FileNotFoundException {
-        String path = Constants.MESSAGE_PROPERTIES_PATH
-                + Constants.PROPERTY_FILE
+        String path = FileConstants.MESSAGE_PROPERTIES_PATH
+                + FileConstants.PROPERTY_FILE
                 + "_" + locale.getLanguage()
                 + "_" + locale.getCountry()
                 + ".properties";
-        String defaultPath = Constants.MESSAGE_PROPERTIES_PATH
-                + Constants.PROPERTY_FILE
+        String defaultPath = FileConstants.MESSAGE_PROPERTIES_PATH
+                + FileConstants.PROPERTY_FILE
                 + ".properties";
         try {
             return new FileInputStream(path);

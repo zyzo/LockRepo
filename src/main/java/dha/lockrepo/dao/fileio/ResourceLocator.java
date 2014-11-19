@@ -1,4 +1,4 @@
-package dha.lockrepo.io;
+package dha.lockrepo.dao.fileio;
 
 import java.io.File;
 
