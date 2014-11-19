@@ -1,34 +1,22 @@
 package dha.lockrepo.core.domains;
 
+import java.util.Optional;
 
 public class TopSecretPieceBE extends TopSecretBE {
 
     private String title;
     private String username;
     private String passwd;
-    private String info;
+    private Optional<String> info;
     private Long groupId;
-
-    public TopSecretPieceBE(String title, String username, String passwd, Long groupId) {
-        this(groupId, title, username, passwd, "_");
-    }
 
     public TopSecretPieceBE(Long groupId, String title, String username, String passwd, String info) {
         super();
         this.title = title;
         this.username = username;
         this.passwd = passwd;
-        this.info = info;
         this.groupId = groupId;
-        this.id = (long) this.hashCode();
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
+        this.info = Optional.ofNullable(info);
     }
 
     public String getTitle() {
@@ -43,12 +31,12 @@ public class TopSecretPieceBE extends TopSecretBE {
         return passwd;
     }
 
-    public String getInfo() {
+    public Optional<String> getInfo() {
         return info;
     }
 
     public void setInfo(String info) {
-        this.info = info;
+        this.info = Optional.of(info);
     }
 
     public Long getGroupId() {
@@ -57,5 +45,10 @@ public class TopSecretPieceBE extends TopSecretBE {
 
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
+    }
+
+    @Override
+    protected String[] getHashCodeFields() {
+        return new String[] {"title", "groupId"};
     }
 }

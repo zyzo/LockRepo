@@ -1,20 +1,21 @@
 package dha.lockrepo.core.domains;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class TopSecretGroupBE extends TopSecretBE {
 
     private String name;
-    private List<TopSecretPieceBE> securePieces;
+    private String description;
 
-    public TopSecretGroupBE() {
-        this.id = (long) this.hashCode();
-        this.setSecurePieces(new ArrayList<TopSecretPieceBE>());
+    public TopSecretGroupBE(Long id, String name, String description) {
+        super();
+        this.setId(id);
+        this.name = name;
+        this.description = description;
     }
 
-    public Long getId() {
-        return this.id;
+    @Override
+    protected String[] getHashCodeFields() {
+        return new String[] {"name", "description"};
     }
 
     public String getName() {
@@ -25,12 +26,12 @@ public class TopSecretGroupBE extends TopSecretBE {
         this.name = name;
     }
 
-    public List<TopSecretPieceBE> getSecurePieces() {
-        return securePieces;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSecurePieces(List<TopSecretPieceBE> securePieces) {
-        this.securePieces = securePieces;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }
