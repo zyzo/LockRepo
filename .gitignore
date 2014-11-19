@@ -13,3 +13,7 @@ hs_err_pid*
 /bin
 /sp
 /sp~
+*.cf
+*.cf~
+*.df
+*.df~

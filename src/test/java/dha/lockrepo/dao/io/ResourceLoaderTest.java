@@ -1,10 +1,10 @@
-package dha.lockrepo.io;
+package dha.lockrepo.dao.io;
 
 import java.util.Locale;
 
 import junit.framework.TestCase;
 import dha.lockrepo.core.enums.MessageEnum;
-import dha.lockrepo.io.ResourceLoader;
+import dha.lockrepo.dao.fileio.ResourceLoader;
 
 public class ResourceLoaderTest extends TestCase {
 

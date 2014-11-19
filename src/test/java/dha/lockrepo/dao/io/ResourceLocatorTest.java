@@ -1,4 +1,4 @@
-package dha.lockrepo.io;
+package dha.lockrepo.dao.io;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import org.junit.Test;
 
 import dha.lockrepo.core.exceptions.AccessRightException;
+import dha.lockrepo.dao.fileio.ResourceLocator;
 
 public class ResourceLocatorTest {
 
