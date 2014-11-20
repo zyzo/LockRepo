@@ -14,7 +14,7 @@ public class TopSecretDAO {
 
     private DataGuardian pieceGuardian = DataGuardian.getInstance(FileConstants.FILE_TOP_SECRET_PIECE);
     private DataGuardian groupGuardian = DataGuardian.getInstance(FileConstants.FILE_TOP_SECRET_GROUP);
-    private IdGenerator idGen = new IdGenerator();
+    private IdGenerator idGen = IdGenerator.getInstance();
 
     public void savePiece(TopSecretPieceBE piece) {
         Long nextId = idGen.getPieceId();

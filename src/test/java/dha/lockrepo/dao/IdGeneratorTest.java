@@ -2,11 +2,17 @@ package dha.lockrepo.dao;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class IdGeneratorTest {
 
-    IdGenerator idGen = new IdGenerator();
+    IdGenerator idGen = IdGenerator.getInstance();
+
+    @Before
+    public void prepareFile() {
+        IdGenerator.prepare();
+    }
 
     @Test
     public void getKey() {

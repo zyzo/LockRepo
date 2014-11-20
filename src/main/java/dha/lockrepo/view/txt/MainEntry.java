@@ -1,9 +1,11 @@
 package dha.lockrepo.view.txt;
 
+import dha.lockrepo.dao.IdGenerator;
 
 public class MainEntry {
 
     public static void main(String[] args) {
+        IdGenerator.prepare();
         System.out
                 .println("\n       Welcome to LockRepo 1.0\n"
                         + "            @author zyzo\n"
