@@ -9,5 +9,6 @@ public class FileConstants {
     public static final String FILE_TOP_SECRET_PIECE = "TOP_SECRET_PIECE.df";
     public static final String FILE_TOP_SECRET_GROUP = "TOP_SECRET_GROUP.df";
     public static final String FILE_ID_GEN = "ID_GEN.cf";
+    public static final String FILE_SYSTEM_CONFIG = "lockrepo.properties";
 
 }
