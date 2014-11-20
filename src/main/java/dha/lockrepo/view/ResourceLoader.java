@@ -1,4 +1,4 @@
-package dha.lockrepo.dao.fileio;
+package dha.lockrepo.view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
