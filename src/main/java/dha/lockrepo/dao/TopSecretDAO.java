@@ -1,6 +1,8 @@
 package dha.lockrepo.dao;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dha.lockrepo.core.domains.TopSecretGroupBE;
 import dha.lockrepo.core.domains.TopSecretPieceBE;
@@ -54,5 +56,50 @@ public class TopSecretDAO {
         }
         pieceGuardian.readClose();
         return piece;
+    }
+
+    public List<TopSecretPieceBE> findAll() {
+        pieceGuardian.readBegin();
+        List<TopSecretPieceBE> pieces = new ArrayList<TopSecretPieceBE>();
+        String pieceString = " ";
+        while ((pieceString = pieceGuardian.readLine()) != null) {
+            TopSecretPieceBE piece = DataFileParser.constructPieceFromString(pieceString);
+            pieces.add(piece);
+        }
+        pieceGuardian.readClose();
+        return pieces;
+    }
+
+    public TopSecretPieceBE deletePieceById(Long id) {
+        String pieceString = " ";
+        pieceGuardian.readBegin();
+        int lineToRemove = 0;
+        while ((pieceString = pieceGuardian.readLine()) != null) {
+            if (DataFileParser.lineMatchesPieceId(id, pieceString)) {
+                pieceGuardian.readClose();
+                pieceGuardian.removeLine(lineToRemove);
+                return DataFileParser.constructPieceFromString(pieceString);
+            }
+            lineToRemove++;
+        }
+        pieceGuardian.readClose();
+        return null;
+    }
+
+    public TopSecretPieceBE update(TopSecretPieceBE piece) {
+        String pieceString = " ";
+        pieceGuardian.readBegin();
+        int lineToRemove = 0;
+        while ((pieceString = pieceGuardian.readLine()) != null) {
+            if (DataFileParser.lineMatchesPieceId(piece.getId(), pieceString)) {
+                pieceGuardian.readClose();
+                pieceGuardian.removeLine(lineToRemove);
+                pieceGuardian.writeLine(DataFileParser.constructStringFromPiece(piece));
+                return piece;
+            }
+            lineToRemove++;
+        }
+        pieceGuardian.readClose();
+        return null;
     }
 }

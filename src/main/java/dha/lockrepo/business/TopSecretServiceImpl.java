@@ -1,14 +1,22 @@
 package dha.lockrepo.business;
 
+import java.util.List;
+
 import dha.lockrepo.core.domains.TopSecretGroupBE;
 import dha.lockrepo.core.domains.TopSecretPieceBE;
+import dha.lockrepo.dao.TopSecretDAO;
 
 public class TopSecretServiceImpl implements TopSecretService {
 
+    TopSecretDAO dao;
+
+    public TopSecretServiceImpl() {
+        dao = new TopSecretDAO();
+    }
+
     @Override
     public void addTopSecretPiece(TopSecretPieceBE sPiece) {
-        // TODO Auto-generated method stub
-
+        dao.savePiece(sPiece);
     }
 
     @Override
@@ -18,9 +26,24 @@ public class TopSecretServiceImpl implements TopSecretService {
     }
 
     @Override
-    public void removeTopSecretPieceById(Long sPieceId) {
-        // TODO Auto-generated method stub
+    public TopSecretPieceBE findPieceById(Long id) {
+        return dao.findPieceById(id);
+    }
 
+    @Override
+    public List<TopSecretPieceBE> findAll() {
+        return dao.findAll();
+    }
+
+
+    @Override
+    public TopSecretPieceBE removePieceById(Long sPieceId) {
+        return dao.deletePieceById(sPieceId);
+    }
+
+    @Override
+    public TopSecretPieceBE update(TopSecretPieceBE piece) {
+        return dao.update(piece);
     }
 
     @Override

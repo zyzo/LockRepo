@@ -23,12 +23,24 @@ public class TopSecretPieceBE extends TopSecretBE {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPasswd() {
         return passwd;
+    }
+
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
     }
 
     public Optional<String> getInfo() {
@@ -51,4 +63,8 @@ public class TopSecretPieceBE extends TopSecretBE {
     protected String[] getHashCodeFields() {
         return new String[] {"title", "groupId"};
     }
+
+
+
+
 }
