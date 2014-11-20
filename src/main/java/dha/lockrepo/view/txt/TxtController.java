@@ -59,6 +59,15 @@ public class TxtController {
             case "version":
                 System.out.println(configService.get(tokens[0]));
                 break;
+            case "getagirlfriend":
+            case "getalife":
+            case "foreveralone":
+                System.out.println("I feel you man. Here take some sympathy...");
+                break;
+            case "quit":
+            case "exit":
+                System.out.println("See ya!");
+                System.exit(0);
             default:
                 System.out.println("Unknown requests. " + HELP_MSG);
             }
