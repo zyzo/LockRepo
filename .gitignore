@@ -17,3 +17,7 @@ hs_err_pid*
 *.cf~
 *.df
 *.df~
+
+*.iml
+.idea/
+*.eml

@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import dha.lockrepo.view.ResourceLocator;
+
 public class DataGuardian {
 
     private String fileName;
@@ -32,8 +34,9 @@ public class DataGuardian {
 
     private void init(String fileName) {
         try {
-            writer = new BufferedWriter(new FileWriter(fileName, true));
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
+        	String directory = ResourceLocator.getDirectoryPath();
+            writer = new BufferedWriter(new FileWriter(directory + fileName, true));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(directory + fileName)));
             readerState = ReaderState.IDLE;
         } catch (IOException e) {
             e.printStackTrace();
