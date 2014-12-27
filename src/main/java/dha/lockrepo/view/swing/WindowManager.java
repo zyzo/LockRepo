@@ -43,6 +43,14 @@ public class WindowManager {
         this.addWindowFrame.setVisible(true);
     }
 
+    void packAddWindow() {
+        this.addWindowFrame.pack();
+    }
+    public void closeAddWindow() {
+        this.addWindowFrame.setVisible(false);
+        mainWindow.updateModel();
+    }
+
     void deleteConfirmed() {
         confirmDeleteWindowFrame.setVisible(false);
         mainWindow.deleteItem(this.selectedItem);
