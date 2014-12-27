@@ -35,8 +35,8 @@ public class DataGuardian {
     private void init(String fileName) {
         try {
         	String directory = ResourceLocator.getDirectoryPath();
-            writer = new BufferedWriter(new FileWriter(directory + fileName, true));
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(directory + fileName)));
+            writer = new BufferedWriter(new FileWriter(directory + "/" + fileName, true));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(directory + "/" + fileName)));
             readerState = ReaderState.IDLE;
         } catch (IOException e) {
             e.printStackTrace();
