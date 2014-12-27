@@ -1,22 +1,28 @@
 package dha.lockrepo.view.swing;
 
+import dha.lockrepo.business.TopSecretService;
+import dha.lockrepo.business.TopSecretServiceImpl;
+import dha.lockrepo.core.domains.TopSecretPieceBE;
+import dha.lockrepo.core.vo.TopSecretPieceVO;
+
 import javax.swing.*;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import java.awt.event.*;
+import java.util.List;
 
 public class MainWindow {
     private JPanel mainPanel;
+    private JList<TopSecretPieceVO> titleList;
     private JList<String> registerDateList;
     private JButton addBtn;
-    private JList<String> titleList;
     private JPopupMenu rightClickMenu;
     private JMenuItem rightClickDeleteItm;
 
+    private TopSecretService topSecretService;
     private WindowManager windowManager;
 
     public MainWindow(WindowManager windowManager) {
         this.windowManager = windowManager;
+        topSecretService = TopSecretServiceImpl.getInstance();
         titleList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -41,23 +47,26 @@ public class MainWindow {
         titleList.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-               if(KeyEvent.VK_DELETE == e.getKeyCode()) {
-                   deleteItem();
-               }
+                if (KeyEvent.VK_DELETE == e.getKeyCode()) {
+                    deleteItem(titleList.getSelectedValue());
+                }
             }
         });
 
         rightClickDeleteItm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                deleteItem();
+                deleteItem(titleList.getSelectedValue());
             }
         });
         rightClickMenu.add(rightClickDeleteItm);
+        updateModel();
     }
 
-    private void deleteItem() {
-        System.out.println("Deleting");
+    private void deleteItem(TopSecretPieceVO pieceVO) {
+        System.out.println("Deleting " + pieceVO.getTitle());
+        topSecretService.removePieceById(pieceVO.getId());
+        updateModel();
     }
 
     private void checkRightClickPopup(MouseEvent e) {
@@ -67,7 +76,7 @@ public class MainWindow {
         }
     }
 
-    public void openInfoWindow(String selected) {
+    public void openInfoWindow(TopSecretPieceVO selected) {
         System.out.println("Opening info window for " + selected);
         windowManager.openInfoWindow(selected);
     }
@@ -86,5 +95,13 @@ public class MainWindow {
 
     private void createUIComponents() {
         rightClickDeleteItm = new JMenuItem("Delete");
+    }
+
+    public void updateModel() {
+        DefaultListModel<TopSecretPieceVO> modelsInList = new DefaultListModel<TopSecretPieceVO>();
+        List<TopSecretPieceBE> models = topSecretService.findAll();
+        List<TopSecretPieceVO> modelsVO = TopSecretPieceVO.convert(models);
+        modelsVO.forEach(e -> modelsInList.addElement(e));
+        this.titleList.setModel(modelsInList);
     }
 }

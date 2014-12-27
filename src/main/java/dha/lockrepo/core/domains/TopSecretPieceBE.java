@@ -64,7 +64,8 @@ public class TopSecretPieceBE extends TopSecretBE {
         return new String[] {"title", "groupId"};
     }
 
-
-
-
+    @Override
+    public int hashCode() {
+        return this.getTitle().hashCode();
+    }
 }

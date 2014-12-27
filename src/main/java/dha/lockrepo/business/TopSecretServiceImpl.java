@@ -10,7 +10,7 @@ public class TopSecretServiceImpl implements TopSecretService {
 
     TopSecretDAO dao;
 
-    public TopSecretServiceImpl() {
+    private TopSecretServiceImpl() {
         dao = new TopSecretDAO();
     }
 
@@ -50,6 +50,14 @@ public class TopSecretServiceImpl implements TopSecretService {
     public void removeTopSecretGroupById(Long sGroupId) {
         // TODO Auto-generated method stub
 
+    }
+
+    private static TopSecretService instance;
+    public static TopSecretService getInstance() {
+        if (TopSecretServiceImpl.instance == null) {
+            instance = new TopSecretServiceImpl();
+        }
+        return instance;
     }
 
 }

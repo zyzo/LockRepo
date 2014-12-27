@@ -1,6 +1,5 @@
 package dha.lockrepo.view.swing;
 
-import dha.lockrepo.core.domains.TopSecretBE;
 import dha.lockrepo.core.domains.TopSecretPieceBE;
 
 import javax.swing.*;
@@ -14,15 +13,27 @@ public class InfoWindow {
     private JTextField descriptionTxtField;
     private JPanel formPanel;
     private JButton saveBtn;
+    private JLabel titleLbl;
+
+    private WindowManager manager;
     /**
      * Item by title
      */
     private TopSecretPieceBE item;
 
-    public InfoWindow() {
+    public InfoWindow(WindowManager manager) {
+        this.manager = manager;
         usernameTxtField.setColumns(20);
         passwordTxtField.setColumns(20);
         descriptionTxtField.setColumns(20);
+        usernameTxtField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (KeyEvent.VK_ESCAPE == e.getKeyCode()) {
+                    manager.closeInfoWindow(item);
+                }
+            }
+        });
     }
 
     public JPanel getMainPanel() {
@@ -31,7 +42,7 @@ public class InfoWindow {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("InfoWindow");
-        frame.setContentPane(new InfoWindow().mainPanel);
+        frame.setContentPane(new InfoWindow(null).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -39,10 +50,13 @@ public class InfoWindow {
 
     public void setItem(TopSecretPieceBE item) {
         this.item = item;
-        if (this.item != null) {
-            usernameTxtField.setText(this.item.getUsername());
-            passwordTxtField.setText(this.item.getPasswd());
-            descriptionTxtField.setText(this.item.getInfo().orElse("no description specified"));
+        if (this.item == null) {
+            throw new IllegalArgumentException("Item cannot be null");
         }
+        System.out.println("Setting item " + item.getTitle());
+        titleLbl.setText(this.item.getTitle());
+        usernameTxtField.setText(this.item.getUsername());
+        passwordTxtField.setText(this.item.getPasswd());
+        descriptionTxtField.setText(this.item.getInfo().orElse("no description specified"));
     }
 }

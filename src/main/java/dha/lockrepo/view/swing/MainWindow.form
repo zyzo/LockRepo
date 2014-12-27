@@ -110,12 +110,7 @@
               </grid>
             </constraints>
             <properties>
-              <model>
-                <item value="sfrwifi"/>
-                <item value="free"/>
-                <item value="sourceforge"/>
-                <item value="insa toulouse"/>
-              </model>
+              <model/>
             </properties>
           </component>
         </children>

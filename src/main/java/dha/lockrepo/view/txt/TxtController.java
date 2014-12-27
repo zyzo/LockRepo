@@ -20,7 +20,7 @@ public class TxtController {
     private SystemConfigService configService;
 
     public TxtController() {
-        secretService = new TopSecretServiceImpl();
+        secretService = TopSecretServiceImpl.getInstance();
         configService = new SystemConfigService();
         scan = new Scanner(System.in);
     }

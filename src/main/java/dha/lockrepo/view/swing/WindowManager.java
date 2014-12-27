@@ -1,8 +1,5 @@
 package dha.lockrepo.view.swing;
 
-import dha.lockrepo.business.TopSecretService;
-import dha.lockrepo.business.TopSecretServiceImpl;
-import dha.lockrepo.core.domains.TopSecretBE;
 import dha.lockrepo.core.domains.TopSecretPieceBE;
 
 import javax.swing.*;
@@ -11,44 +8,50 @@ public class WindowManager {
 
     private JFrame mainWindowFrame;
     private JFrame infoWindowFrame;
-    private MainWindow mainWindow;
     private InfoWindow infoWindow;
 
-    private TopSecretService topSecretService;
-    public enum WindowType {
-        MAIN,
-        INFO
-    }
-
     public WindowManager() {
-        topSecretService = new TopSecretServiceImpl();
-        mainWindowFrame = createJFrame("LockRepo", WindowType.MAIN);
-        mainWindowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindowFrame.setVisible(true);
+        // open main window
+        mainWindowFrame = createMainWindowFrame("LockRepo");
+        infoWindowFrame = createInfoWindowFrame(null);
     }
 
-    void openInfoWindow(String selectedItem) {
-        infoWindowFrame = createJFrame(selectedItem, WindowType.INFO);
-        TopSecretPieceBE item = topSecretService.findPieceById(90L);
-        infoWindow.setItem(item);
+    void openInfoWindow(TopSecretPieceBE item) {
+        System.out.println(item.hashCode());
+        if (infoWindowFrame == null) {
+            infoWindowFrame = createInfoWindowFrame(item.getTitle());
+        }
+        updateInfoWindow(item);
         infoWindowFrame.setVisible(true);
     }
 
-    private JFrame createJFrame(String title, WindowType window) {
+    private void updateInfoWindow(TopSecretPieceBE item) {
+        infoWindow.setItem(item);
+        infoWindowFrame.setTitle(item.getTitle());
+    }
+
+    void closeInfoWindow(TopSecretPieceBE item) {
+        infoWindowFrame.setVisible(false);
+    }
+    private JFrame createMainWindowFrame(String title) {
         JFrame frame = new JFrame(title);
-        JPanel contentPane = null;
-        switch (window) {
-        case MAIN:
-            mainWindow = new MainWindow(this);
-            contentPane = mainWindow.getMainPanel();
-            break;
-        case INFO:
-            infoWindow = new InfoWindow();
-            contentPane = infoWindow.getMainPanel();
-            break;
-        }
+        MainWindow mainWindow = new MainWindow(this);
+        JPanel contentPane = mainWindow.getMainPanel();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
         frame.setContentPane(contentPane);
         frame.pack();
         return frame;
     }
+
+    private JFrame createInfoWindowFrame(String title) {
+        JFrame frame = new JFrame(title);
+        infoWindow = new InfoWindow(this);
+        JPanel contentPane = infoWindow.getMainPanel();
+        frame.setContentPane(contentPane);
+        frame.pack();
+        return frame;
+    }
+
+
 }
