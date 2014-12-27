@@ -54,7 +54,7 @@ public class TopSecretServiceImpl implements TopSecretService {
 
     private static TopSecretService instance;
     public static TopSecretService getInstance() {
-        if (TopSecretServiceImpl.instance == null) {
+        if (instance == null) {
             instance = new TopSecretServiceImpl();
         }
         return instance;

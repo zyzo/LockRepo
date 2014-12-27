@@ -17,10 +17,6 @@ public class WindowManager {
     }
 
     void openInfoWindow(TopSecretPieceBE item) {
-        System.out.println(item.hashCode());
-        if (infoWindowFrame == null) {
-            infoWindowFrame = createInfoWindowFrame(item.getTitle());
-        }
         updateInfoWindow(item);
         infoWindowFrame.setVisible(true);
     }
@@ -28,6 +24,10 @@ public class WindowManager {
     private void updateInfoWindow(TopSecretPieceBE item) {
         infoWindow.setItem(item);
         infoWindowFrame.setTitle(item.getTitle());
+    }
+
+    void packMainWindowFrame() {
+        mainWindowFrame.pack();
     }
 
     void closeInfoWindow(TopSecretPieceBE item) {

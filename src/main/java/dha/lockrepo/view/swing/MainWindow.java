@@ -67,12 +67,14 @@ public class MainWindow {
         System.out.println("Deleting " + pieceVO.getTitle());
         topSecretService.removePieceById(pieceVO.getId());
         updateModel();
+        windowManager.packMainWindowFrame();
     }
 
     private void checkRightClickPopup(MouseEvent e) {
         if (e.isPopupTrigger()) {
             System.out.println("pop up triggering");
             rightClickMenu.show(titleList, e.getX(), e.getY());
+            titleList.setSelectedIndex(e.getY() / titleList.getFixedCellWidth());
         }
     }
 

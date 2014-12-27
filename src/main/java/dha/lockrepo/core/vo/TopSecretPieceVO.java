@@ -20,6 +20,7 @@ public class TopSecretPieceVO extends TopSecretPieceBE {
                 data.getUsername(),
                 data.getPasswd(),
                 data.getInfo().get());
+        this.setId(data.getId());
     }
 
     @Override

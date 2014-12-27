@@ -110,6 +110,8 @@
               </grid>
             </constraints>
             <properties>
+              <fixedCellHeight value="20"/>
+              <fixedCellWidth value="20"/>
               <model/>
             </properties>
           </component>
