@@ -31,8 +31,8 @@ public class AddPieceWindow {
     public AddPieceWindow(WindowManager windowManager) {
         this.windowManager = windowManager;
         secretService = TopSecretServiceImpl.getInstance();
-        usernameTxtField.setColumns(20);
-        passwordTxtField.setColumns(20);
+        usernameTxtField.setColumns(10);
+        passwordTxtField.setColumns(10);
         descriptionTxtArea.setRows(3);
         confirmButton.addMouseListener(new MouseAdapter() {
             @Override

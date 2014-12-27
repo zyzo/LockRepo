@@ -85,6 +85,7 @@
                 <item value="Plus than a year"/>
                 <item value="Plus than a year"/>
               </model>
+              <visible value="false"/>
             </properties>
           </component>
           <component id="9cdcf" class="javax.swing.JLabel">
@@ -101,6 +102,7 @@
             </constraints>
             <properties>
               <text value="Register date"/>
+              <visible value="false"/>
             </properties>
           </component>
           <component id="c5ddd" class="javax.swing.JList" binding="titleList">

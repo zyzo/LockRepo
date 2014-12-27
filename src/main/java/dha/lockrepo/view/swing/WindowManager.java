@@ -24,13 +24,17 @@ public class WindowManager {
     }
 
     void openInfoWindow(TopSecretPieceBE item) {
-        updateInfoWindow(item);
+        infoWindow.setItem(item);
+        infoWindowFrame.setTitle(item.getTitle());
         infoWindowFrame.setVisible(true);
     }
 
-    private void updateInfoWindow(TopSecretPieceBE item) {
-        infoWindow.setItem(item);
-        infoWindowFrame.setTitle(item.getTitle());
+    void packInfoWindow() {
+        infoWindowFrame.pack();
+    }
+
+    void update() {
+        mainWindow.updateModel();
     }
 
 
