@@ -1,4 +1,4 @@
-package dha.lockrepo.dao.io;
+package dha.lockrepo.dao.fileio;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,8 +7,6 @@ import java.io.IOException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import dha.lockrepo.dao.fileio.DataGuardian;
 
 
 public class DataGuardianTest {

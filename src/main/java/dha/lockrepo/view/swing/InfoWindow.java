@@ -44,7 +44,7 @@ public class InfoWindow {
         saveBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                item.setTitle(usernameTxtField.getText());
+                item.setTitle(titleTxtField.getText());
                 item.setUsername(usernameTxtField.getText());
                 item.setPasswd(passwordTxtField.getText());
                 secretService.update(item);

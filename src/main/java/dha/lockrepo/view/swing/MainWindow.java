@@ -16,6 +16,7 @@ public class MainWindow {
     private JButton addBtn;
     private JPopupMenu rightClickMenu;
     private JMenuItem rightClickDeleteItm;
+    private JMenuItem rightClickOpenItm;
 
     private TopSecretService topSecretService;
     private WindowManager windowManager;
@@ -59,6 +60,14 @@ public class MainWindow {
                 windowManager.openConfirmDeleteWindow(titleList.getSelectedValue());
             }
         });
+        rightClickOpenItm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                windowManager.openInfoWindow(titleList.getSelectedValue());
+            }
+        });
+
+        rightClickMenu.add(rightClickOpenItm);
         rightClickMenu.add(rightClickDeleteItm);
         updateModel();
         addBtn.addMouseListener(new MouseAdapter() {
@@ -67,6 +76,7 @@ public class MainWindow {
                 windowManager.openAddWindow();
             }
         });
+
     }
 
     public void deleteItem(TopSecretPieceVO pieceVO) {
@@ -98,10 +108,6 @@ public class MainWindow {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-    }
-
-    private void createUIComponents() {
-        rightClickDeleteItm = new JMenuItem("Delete");
     }
 
     public void updateModel() {

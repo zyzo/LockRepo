@@ -4,6 +4,7 @@ import dha.lockrepo.core.domains.TopSecretPieceBE;
 import dha.lockrepo.core.vo.TopSecretPieceVO;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class WindowManager {
 
@@ -68,14 +69,16 @@ public class WindowManager {
     void closeInfoWindow(TopSecretPieceBE item) {
         infoWindowFrame.setVisible(false);
     }
+
     private JFrame createMainWindowFrame(String title) {
         JFrame frame = new JFrame(title);
         mainWindow = new MainWindow(this);
         JPanel contentPane = mainWindow.getMainPanel();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
         frame.setContentPane(contentPane);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        positionOnCenter(frame);
+        frame.setVisible(true);
         return frame;
     }
 
@@ -85,6 +88,7 @@ public class WindowManager {
         JPanel contentPane = infoWindow.getMainPanel();
         frame.setContentPane(contentPane);
         frame.pack();
+        positionOnCenter(frame);
         return frame;
     }
 
@@ -92,15 +96,24 @@ public class WindowManager {
         JFrame frame = new JFrame(title);
         frame.setContentPane(new ConfirmDeleteWindow(this).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(mainWindowFrame);
         frame.pack();
-        return  frame;
+        positionOnCenter(frame);
+        return frame;
+    }
+
+    private void positionOnCenter(JFrame frame) {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
     }
 
     private JFrame createAddWindowFrame(String title) {
         JFrame frame = new JFrame(title);
         frame.setContentPane(new AddPieceWindow(this).mainPanel);
         frame.pack();
-        return  frame;
+        frame.setLocation(mainWindowFrame.getX() + mainWindowFrame.getSize().width,
+                mainWindowFrame.getY());
+        return frame;
     }
 
 }
