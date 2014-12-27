@@ -1,19 +1,24 @@
 package dha.lockrepo.view.swing;
 
 import dha.lockrepo.core.domains.TopSecretPieceBE;
+import dha.lockrepo.core.vo.TopSecretPieceVO;
 
 import javax.swing.*;
 
 public class WindowManager {
 
     private JFrame mainWindowFrame;
+    private MainWindow mainWindow;
     private JFrame infoWindowFrame;
     private InfoWindow infoWindow;
+    private JFrame confirmDeleteWindowFrame;
+    private TopSecretPieceVO selectedItem;
 
     public WindowManager() {
         // open main window
         mainWindowFrame = createMainWindowFrame("LockRepo");
         infoWindowFrame = createInfoWindowFrame(null);
+        confirmDeleteWindowFrame = createConfirmDeleteWindowFrame("Attention");
     }
 
     void openInfoWindow(TopSecretPieceBE item) {
@@ -26,8 +31,20 @@ public class WindowManager {
         infoWindowFrame.setTitle(item.getTitle());
     }
 
-    void packMainWindowFrame() {
+
+    void deleteItem(TopSecretPieceVO topSecretPieceVO) {
+        this.selectedItem = topSecretPieceVO;
+        confirmDeleteWindowFrame.setVisible(true);
+    }
+
+    void deleteConfirmed() {
+        confirmDeleteWindowFrame.setVisible(false);
+        mainWindow.deleteItem(this.selectedItem);
         mainWindowFrame.pack();
+    }
+
+    void deleteCanceled() {
+        confirmDeleteWindowFrame.setVisible(false);
     }
 
     void closeInfoWindow(TopSecretPieceBE item) {
@@ -35,7 +52,7 @@ public class WindowManager {
     }
     private JFrame createMainWindowFrame(String title) {
         JFrame frame = new JFrame(title);
-        MainWindow mainWindow = new MainWindow(this);
+        mainWindow = new MainWindow(this);
         JPanel contentPane = mainWindow.getMainPanel();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -51,6 +68,14 @@ public class WindowManager {
         frame.setContentPane(contentPane);
         frame.pack();
         return frame;
+    }
+
+    private JFrame createConfirmDeleteWindowFrame(String title) {
+        JFrame frame = new JFrame(title);
+        frame.setContentPane(new ConfirmDeleteWindow(this).mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        return  frame;
     }
 
 

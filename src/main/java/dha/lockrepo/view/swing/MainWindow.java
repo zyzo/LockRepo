@@ -48,7 +48,7 @@ public class MainWindow {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (KeyEvent.VK_DELETE == e.getKeyCode()) {
-                    deleteItem(titleList.getSelectedValue());
+                    windowManager.deleteItem(titleList.getSelectedValue());
                 }
             }
         });
@@ -56,18 +56,17 @@ public class MainWindow {
         rightClickDeleteItm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                deleteItem(titleList.getSelectedValue());
+                windowManager.deleteItem(titleList.getSelectedValue());
             }
         });
         rightClickMenu.add(rightClickDeleteItm);
         updateModel();
     }
 
-    private void deleteItem(TopSecretPieceVO pieceVO) {
+    public void deleteItem(TopSecretPieceVO pieceVO) {
         System.out.println("Deleting " + pieceVO.getTitle());
         topSecretService.removePieceById(pieceVO.getId());
         updateModel();
-        windowManager.packMainWindowFrame();
     }
 
     private void checkRightClickPopup(MouseEvent e) {
