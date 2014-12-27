@@ -13,12 +13,14 @@ public class WindowManager {
     private InfoWindow infoWindow;
     private JFrame confirmDeleteWindowFrame;
     private TopSecretPieceVO selectedItem;
+    private JFrame addWindowFrame;
 
     public WindowManager() {
         // open main window
         mainWindowFrame = createMainWindowFrame("LockRepo");
         infoWindowFrame = createInfoWindowFrame(null);
-        confirmDeleteWindowFrame = createConfirmDeleteWindowFrame("Attention");
+        confirmDeleteWindowFrame = createConfirmDeleteWindowFrame("Confirmation");
+        addWindowFrame = createAddWindowFrame("Create new secret");
     }
 
     void openInfoWindow(TopSecretPieceBE item) {
@@ -32,9 +34,13 @@ public class WindowManager {
     }
 
 
-    void deleteItem(TopSecretPieceVO topSecretPieceVO) {
+    void openConfirmDeleteWindow(TopSecretPieceVO topSecretPieceVO) {
         this.selectedItem = topSecretPieceVO;
         confirmDeleteWindowFrame.setVisible(true);
+    }
+
+    void openAddWindow() {
+        this.addWindowFrame.setVisible(true);
     }
 
     void deleteConfirmed() {
@@ -78,5 +84,11 @@ public class WindowManager {
         return  frame;
     }
 
+    private JFrame createAddWindowFrame(String title) {
+        JFrame frame = new JFrame(title);
+        frame.setContentPane(new AddPieceWindow(this).mainPanel);
+        frame.pack();
+        return  frame;
+    }
 
 }
