@@ -7,10 +7,17 @@ public class DataFileParser {
 
     private static final char MARKER_PREFIX = '#';
     private static final String TOP_SECRET_PIECE_INFO_MISSING = "???";
+    private static final String TOP_SECRET_PIECE_INFO_ESC_CHAR = "\\+";
 
     public static String constructStringFromPiece(TopSecretPieceBE piece) {
+        String info = "";
+        if (piece.getInfo().isPresent()) {
+            info = piece.getInfo().get().replace(" ", TOP_SECRET_PIECE_INFO_ESC_CHAR);
+        } else {
+            info = TOP_SECRET_PIECE_INFO_MISSING;
+        }
         return MARKER_PREFIX + piece.getId().toString() + " " + piece.getGroupId() + " " + piece.getTitle() + " "
-                + piece.getUsername() + " " + piece.getPasswd() + " " + piece.getInfo().orElse(TOP_SECRET_PIECE_INFO_MISSING);
+                + piece.getUsername() + " " + piece.getPasswd() + " " + info;
     }
 
     public static TopSecretPieceBE constructPieceFromString(String s) {
@@ -21,7 +28,7 @@ public class DataFileParser {
             throw new RuntimeException(DataFileParser.class.getSimpleName() + " : Missing information");
         TopSecretPieceBE topSecretPieceBE = new TopSecretPieceBE(Long.parseLong(parse[1]),
                 parse[2], parse[3],
-                parse[4], parse[5]);
+                parse[4], parse[5].replace(TOP_SECRET_PIECE_INFO_ESC_CHAR, " "));
         topSecretPieceBE.setId(Long.parseLong(parse[0]));
         return topSecretPieceBE;
     }

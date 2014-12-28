@@ -111,7 +111,7 @@ public class MainWindow {
     }
 
     public void updateModel() {
-        DefaultListModel<TopSecretPieceVO> modelsInList = new DefaultListModel<TopSecretPieceVO>();
+        DefaultListModel<TopSecretPieceVO> modelsInList = new DefaultListModel<>();
         List<TopSecretPieceBE> models = topSecretService.findAll();
         List<TopSecretPieceVO> modelsVO = TopSecretPieceVO.convert(models);
         modelsVO.forEach(e -> modelsInList.addElement(e));

@@ -5,8 +5,6 @@ import dha.lockrepo.business.TopSecretServiceImpl;
 import dha.lockrepo.core.domains.TopSecretPieceBE;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -33,26 +31,20 @@ public class InfoWindow {
         usernameTxtField.setColumns(20);
         passwordTxtField.setColumns(20);
         descriptionTxtField.setColumns(20);
-        usernameTxtField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (KeyEvent.VK_ESCAPE == e.getKeyCode()) {
-                    windowManager.closeInfoWindow(item);
-                }
-            }
-        });
         saveBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 item.setTitle(titleTxtField.getText());
                 item.setUsername(usernameTxtField.getText());
                 item.setPasswd(passwordTxtField.getText());
+                item.setInfo(descriptionTxtField.getText());
                 secretService.update(item);
                 titleTxtField.setVisible(false);
                 titleLbl.setText(titleTxtField.getText());
                 titleLbl.setVisible(true);
-                windowManager.packInfoWindow();
-                windowManager.update();
+                InfoWindow.this.manager.packInfoWindow();
+                InfoWindow.this.manager.update();
+                InfoWindow.this.manager.closeAddWindow();
             }
         });
         titleLbl.addMouseListener(new MouseAdapter() {

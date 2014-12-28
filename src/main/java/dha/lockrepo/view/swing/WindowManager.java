@@ -5,6 +5,7 @@ import dha.lockrepo.core.vo.TopSecretPieceVO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class WindowManager {
 
@@ -22,6 +23,42 @@ public class WindowManager {
         infoWindowFrame = createInfoWindowFrame(null);
         confirmDeleteWindowFrame = createConfirmDeleteWindowFrame("Confirmation");
         addWindowFrame = createAddWindowFrame("Create new secret");
+        addGlobalKeyEvents();
+    }
+
+    private void addGlobalKeyEvents() {
+        //Hijack the keyboard manager
+        KeyboardFocusManager manager =
+                KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher( new KeyDispatcher());
+
+    }
+
+    //Custom dispatcher
+    class KeyDispatcher implements KeyEventDispatcher {
+
+        public static final int KEY_CHAR_ESCAPE = 27;
+
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if(e.getID() == KeyEvent.KEY_TYPED) {
+                if (mainWindowFrame.isActive()) {
+                    if (e.getKeyChar() == 27) {
+                        System.out.println("Quitting...");
+                        System.exit(0);
+                    }
+                } else if (infoWindowFrame.isActive()) {
+                    if (e.getKeyChar() == KEY_CHAR_ESCAPE) {
+                        closeInfoWindow(selectedItem);
+                    }
+                } else if (addWindowFrame.isActive()) {
+                    if (e.getKeyChar() == KEY_CHAR_ESCAPE) {
+                        closeAddWindow();
+                    }
+                }
+            }
+            //Allow the event to be redispatched
+            return false;
+        }
     }
 
     void openInfoWindow(TopSecretPieceBE item) {
@@ -50,6 +87,7 @@ public class WindowManager {
 
     void packAddWindow() {
         this.addWindowFrame.pack();
+
     }
     public void closeAddWindow() {
         this.addWindowFrame.setVisible(false);
@@ -87,8 +125,9 @@ public class WindowManager {
         infoWindow = new InfoWindow(this);
         JPanel contentPane = infoWindow.getMainPanel();
         frame.setContentPane(contentPane);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.pack();
-        positionOnCenter(frame);
+        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height - mainWindowFrame.getSize().height / 2);
         return frame;
     }
 

@@ -6,12 +6,11 @@ import dha.lockrepo.core.LRUtils;
 import dha.lockrepo.core.domains.TopSecretPieceBE;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * Created by zyzo on 27/12/14.
- */
 public class AddPieceWindow {
     JPanel mainPanel;
     private JTextField titleTxtField;
@@ -45,18 +44,16 @@ public class AddPieceWindow {
                         || LRUtils.isNullOrEmpty(username)
                         || LRUtils.isNullOrEmpty(password)) {
                     errorMessageLbl.setVisible(true);
-                    windowManager.packAddWindow();
+                    AddPieceWindow.this.windowManager.packAddWindow();
                 } else {
                     errorMessageLbl.setVisible(false);
                     TopSecretPieceBE piece = new TopSecretPieceBE(1L, title, username, password, "???");
                     secretService.addTopSecretPiece(piece);
-                    windowManager.closeAddWindow();
+                    AddPieceWindow.this.windowManager.closeAddWindow();
                 }
             }
         });
     }
-
-
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("AddPieceWindow");
