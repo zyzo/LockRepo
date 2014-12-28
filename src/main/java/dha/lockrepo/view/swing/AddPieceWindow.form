@@ -59,7 +59,9 @@
           </grid>
           <forms defaultalign-horz="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="NanumGothic" size="14" style="1"/>
+        </properties>
       </component>
       <component id="8a3d8" class="javax.swing.JLabel" binding="passwdLbl">
         <constraints>
@@ -77,7 +79,9 @@
           </grid>
           <forms defaultalign-horz="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="NanumGothic" size="14" style="1"/>
+        </properties>
       </component>
       <component id="17371" class="javax.swing.JTextField" binding="titleTxtField">
         <constraints>
@@ -86,7 +90,9 @@
           </grid>
           <forms defaultalign-horz="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="NanumGothic" size="14" style="1"/>
+        </properties>
       </component>
       <hspacer id="4c4b8">
         <constraints>

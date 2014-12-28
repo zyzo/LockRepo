@@ -1,24 +1,14 @@
 package dha.lockrepo.view.swing;
 
-import javax.swing.*;
-
 public class MainEntry {
 
     public static void main(String[] args) {
-        setLookAndFeel();
+        GlobalSettings g = new GlobalSettings();
+        g.setLookAndFeel();
+        g.setDefaultFont();
+        g.setColor();
         WindowManager manager = new WindowManager();
+        manager.start();
     }
 
-    private static void setLookAndFeel() {
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Nimbus Look & Feel not available");
-        }
-    }
 }

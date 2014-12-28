@@ -1,6 +1,7 @@
 package dha.lockrepo.view.swing;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,6 +14,7 @@ public class PopupWindow {
     private WindowManager windowManager;
 
     public PopupWindow(WindowManager windowManager, String message, Runnable onCancel, Runnable onConfirm) {
+        this.mainPanel.setPreferredSize(new Dimension(200, 75));
         this.messageLbl.setText(message);
         this.windowManager = windowManager;
         cancelButton.addMouseListener(new MouseAdapter() {

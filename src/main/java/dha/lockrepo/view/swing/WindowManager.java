@@ -29,6 +29,10 @@ public class WindowManager {
         addGlobalKeyEvents();
     }
 
+    public void start() {
+        mainWindowFrame.setVisible(true);
+    }
+
     private void addGlobalKeyEvents() {
         //Hijack the keyboard manager
         KeyboardFocusManager manager =
@@ -64,9 +68,15 @@ public class WindowManager {
     }
 
     private void onCloseOperation() {
-        System.out.println("Quitting...");
-        confirmQuitWindowFrame = createConfirmQuitWindowFrame("Confirmation");
-        confirmQuitWindowFrame.setVisible(true);
+        if (infoWindowFrame.isVisible()) {
+            closeInfoWindow(selectedItem);
+        } else if (addWindowFrame.isVisible()) {
+            closeAddWindow();
+        } else {
+            System.out.println("Quitting...");
+            confirmQuitWindowFrame = createConfirmQuitWindowFrame("Confirmation");
+            confirmQuitWindowFrame.setVisible(true);
+        }
     }
     void openInfoWindow(TopSecretPieceBE item) {
         infoWindow.setItem(item);
@@ -135,6 +145,7 @@ public class WindowManager {
         mainWindow = new MainWindow(this);
         JPanel contentPane = mainWindow.getMainPanel();
         frame.setContentPane(contentPane);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -143,7 +154,6 @@ public class WindowManager {
         });
         frame.pack();
         positionOnCenter(frame);
-        frame.setVisible(true);
         return frame;
     }
 
@@ -152,6 +162,8 @@ public class WindowManager {
         infoWindow = new InfoWindow(this);
         JPanel contentPane = infoWindow.getMainPanel();
         frame.setContentPane(contentPane);
+        frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        frame.setUndecorated(true);
         frame.pack();
         return frame;
     }
@@ -161,6 +173,8 @@ public class WindowManager {
         frame.setContentPane(new PopupWindow(this, "Delete this ?", this::deleteCanceled, this::deleteConfirmed).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(mainWindowFrame);
+        frame.setUndecorated(true);
+        frame.getRootPane().setWindowDecorationStyle(JRootPane.ERROR_DIALOG);
         frame.pack();
         positionOnCenter(frame);
         return frame;
@@ -171,6 +185,8 @@ public class WindowManager {
         frame.setContentPane(new PopupWindow(this, "Quit LockRepo ?", this::closeConfirmQuitWindow, this::systemQuit).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(mainWindowFrame);
+        frame.setUndecorated(true);
+        frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         frame.pack();
         positionOnCenter(frame);
         return frame;
@@ -184,6 +200,8 @@ public class WindowManager {
     private JFrame createAddWindowFrame(String title) {
         JFrame frame = new JFrame(title);
         frame.setContentPane(new AddPieceWindow(this).mainPanel);
+        frame.setUndecorated(true);
+        frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         frame.pack();
         return frame;
     }
