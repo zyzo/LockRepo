@@ -6,6 +6,8 @@ import dha.lockrepo.core.vo.TopSecretPieceVO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class WindowManager {
 
@@ -15,6 +17,7 @@ public class WindowManager {
     private InfoWindow infoWindow;
     private JFrame confirmDeleteWindowFrame;
     private TopSecretPieceVO selectedItem;
+    private JFrame confirmQuitWindowFrame;
     private JFrame addWindowFrame;
 
     public WindowManager() {
@@ -43,8 +46,7 @@ public class WindowManager {
             if(e.getID() == KeyEvent.KEY_TYPED) {
                 if (mainWindowFrame.isActive()) {
                     if (e.getKeyChar() == 27) {
-                        System.out.println("Quitting...");
-                        System.exit(0);
+                        onCloseOperation();
                     }
                 } else if (infoWindowFrame.isActive()) {
                     if (e.getKeyChar() == KEY_CHAR_ESCAPE) {
@@ -61,9 +63,19 @@ public class WindowManager {
         }
     }
 
+    private void onCloseOperation() {
+        System.out.println("Quitting...");
+        confirmQuitWindowFrame = createConfirmQuitWindowFrame("Confirmation");
+        confirmQuitWindowFrame.setVisible(true);
+    }
     void openInfoWindow(TopSecretPieceBE item) {
         infoWindow.setItem(item);
         infoWindowFrame.setTitle(item.getTitle());
+        this.infoWindowFrame.setLocation(
+                mainWindowFrame.getX()
+                        - mainWindowFrame.getSize().width
+                        - this.infoWindowFrame.getSize().width / 2,
+                mainWindowFrame.getY());
         infoWindowFrame.setVisible(true);
     }
 
@@ -82,6 +94,8 @@ public class WindowManager {
     }
 
     void openAddWindow() {
+        this.addWindowFrame.setLocation(mainWindowFrame.getX() + mainWindowFrame.getSize().width,
+                mainWindowFrame.getY());
         this.addWindowFrame.setVisible(true);
     }
 
@@ -94,13 +108,13 @@ public class WindowManager {
         mainWindow.updateModel();
     }
 
-    void deleteConfirmed() {
+    private void deleteConfirmed() {
         confirmDeleteWindowFrame.setVisible(false);
         mainWindow.deleteItem(this.selectedItem);
         mainWindowFrame.pack();
     }
 
-    void deleteCanceled() {
+    private void deleteCanceled() {
         confirmDeleteWindowFrame.setVisible(false);
     }
 
@@ -108,12 +122,25 @@ public class WindowManager {
         infoWindowFrame.setVisible(false);
     }
 
+    private void closeConfirmQuitWindow() {
+        confirmQuitWindowFrame.setVisible(false);
+    }
+
+    private void systemQuit() {
+        System.exit(-1);
+    }
+
     private JFrame createMainWindowFrame(String title) {
         JFrame frame = new JFrame(title);
         mainWindow = new MainWindow(this);
         JPanel contentPane = mainWindow.getMainPanel();
         frame.setContentPane(contentPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                onCloseOperation();
+            }
+        });
         frame.pack();
         positionOnCenter(frame);
         frame.setVisible(true);
@@ -125,15 +152,23 @@ public class WindowManager {
         infoWindow = new InfoWindow(this);
         JPanel contentPane = infoWindow.getMainPanel();
         frame.setContentPane(contentPane);
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.pack();
-        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height - mainWindowFrame.getSize().height / 2);
         return frame;
     }
 
     private JFrame createConfirmDeleteWindowFrame(String title) {
         JFrame frame = new JFrame(title);
-        frame.setContentPane(new ConfirmDeleteWindow(this).mainPanel);
+        frame.setContentPane(new PopupWindow(this, "Delete this ?", this::deleteCanceled, this::deleteConfirmed).mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(mainWindowFrame);
+        frame.pack();
+        positionOnCenter(frame);
+        return frame;
+    }
+
+    private JFrame createConfirmQuitWindowFrame(String title) {
+        JFrame frame = new JFrame(title);
+        frame.setContentPane(new PopupWindow(this, "Quit LockRepo ?", this::closeConfirmQuitWindow, this::systemQuit).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(mainWindowFrame);
         frame.pack();
@@ -150,8 +185,6 @@ public class WindowManager {
         JFrame frame = new JFrame(title);
         frame.setContentPane(new AddPieceWindow(this).mainPanel);
         frame.pack();
-        frame.setLocation(mainWindowFrame.getX() + mainWindowFrame.getSize().width,
-                mainWindowFrame.getY());
         return frame;
     }
 

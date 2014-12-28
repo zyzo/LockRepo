@@ -2,6 +2,7 @@ package dha.lockrepo.view.swing;
 
 import dha.lockrepo.business.TopSecretService;
 import dha.lockrepo.business.TopSecretServiceImpl;
+import dha.lockrepo.core.LRUtils;
 import dha.lockrepo.core.domains.TopSecretPieceBE;
 import dha.lockrepo.core.vo.TopSecretPieceVO;
 
@@ -17,6 +18,8 @@ public class MainWindow {
     private JPopupMenu rightClickMenu;
     private JMenuItem rightClickDeleteItm;
     private JMenuItem rightClickOpenItm;
+    private JMenuItem rightClickCopyUsernameItm;
+    private JMenuItem rightClickCopyPasswordItm;
 
     private TopSecretService topSecretService;
     private WindowManager windowManager;
@@ -31,8 +34,6 @@ public class MainWindow {
                     if (e.getClickCount() == 2) {
                         openInfoWindow(titleList.getSelectedValue());
                     }
-                } else {
-                    checkRightClickPopup(e);
                 }
             }
             @Override
@@ -53,7 +54,6 @@ public class MainWindow {
                 }
             }
         });
-
         rightClickDeleteItm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,8 +66,21 @@ public class MainWindow {
                 windowManager.openInfoWindow(titleList.getSelectedValue());
             }
         });
-
+        rightClickCopyUsernameItm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LRUtils.copyToClipboard(titleList.getSelectedValue().getUsername());
+            }
+        });
+        rightClickCopyPasswordItm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LRUtils.copyToClipboard(titleList.getSelectedValue().getPasswd());
+            }
+        });
         rightClickMenu.add(rightClickOpenItm);
+        rightClickMenu.add(rightClickCopyUsernameItm);
+        rightClickMenu.add(rightClickCopyPasswordItm);
         rightClickMenu.add(rightClickDeleteItm);
         updateModel();
         addBtn.addMouseListener(new MouseAdapter() {
@@ -76,7 +89,6 @@ public class MainWindow {
                 windowManager.openAddWindow();
             }
         });
-
     }
 
     public void deleteItem(TopSecretPieceVO pieceVO) {
