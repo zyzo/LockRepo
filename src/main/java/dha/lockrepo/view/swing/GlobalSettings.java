@@ -6,14 +6,9 @@ import java.awt.*;
 
 public class GlobalSettings {
 
-    private static String[] commonForegroundColor = {
+    private static final String[] commonForegroundColor = {
             "TextField.foreground",
     };
-
-    void setColor() {
-        for (String s : commonForegroundColor)
-            UIManager.put(s, new Color(160, 40, 33));
-    }
 
     private static final String[] commonFonts = {
             "Label.font",
@@ -24,8 +19,13 @@ public class GlobalSettings {
             "MenuItem.font"
     };
     private static final FontUIResource buttonFont = new FontUIResource("NanumGothic",Font.BOLD, 12);
-    void setDefaultFont() {
 
+    void setColor() {
+        for (String s : commonForegroundColor)
+            UIManager.put(s, new Color(160, 40, 33));
+    }
+
+    void setDefaultFont() {
         FontUIResource commonFont = new FontUIResource("NanumGothic", Font.PLAIN, 12);
         for (String s : commonFonts) {
             UIManager.put(s, commonFont);

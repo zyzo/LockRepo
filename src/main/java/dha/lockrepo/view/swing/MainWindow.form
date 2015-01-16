@@ -199,7 +199,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text value="Copy password to Clipboard"/>
+              <text value="Copy password to clipboard"/>
             </properties>
           </component>
         </children>
