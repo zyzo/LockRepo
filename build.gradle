@@ -1,0 +1,54 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+version = '1.0'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+task copyToLib( type: Copy ) {
+    into "$buildDir/libs/lib"
+    from configurations.compile
+}
+
+jar {dependsOn copyToLib}
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'LockRepo',
+                    'Implementation-Version': 1.0,
+                    'Main-Class' : 'dha.lockrepo.view.swing.MainEntry',
+                    'Class-Path' : "$projectDir/repos/lib/forms_rt-13.1.1.jar " +
+                                   "$projectDir/repos/lib/jgoodies-forms-1.6.0.jar " +
+                                   "$projectDir/repos/lib/jgoodies-common-1.4.0.jar " +
+                                   "$projectDir/repos/lib/jgoodies-looks:2.5.2.jar "
+    }
+}
+repositories {
+    mavenCentral()
+    flatDir dirs : "${rootDir}/lib"
+}
+
+dependencies {
+    compile 'com.jgoodies:jgoodies-forms:1.6.0'
+    compile 'com.jgoodies:jgoodies-common:1.2.1'
+    compile 'com.jgoodies:jgoodies-looks:2.5.2'
+    compile 'com.intellij:forms_rt:13.1.1'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task copyToRepo( type: Copy ) {
+    into "$projectDir/repos/lib"
+    from "$buildDir/libs/lib"
+}
+
+uploadArchives {dependsOn copyToRepo}
+uploadArchives {
+    repositories {
+        flatDir {
+            dirs 'repos'
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
